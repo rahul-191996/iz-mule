@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="751abaf2-6bde-4592-8258-4dc5a7e3f07b" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="f85b9c3a-2a87-4fa3-82a6-5f60fcd4920a" >
+		<db:my-sql-connection host="db4free.net" port="3306" user="rahul1996" password="godisgreat@123" database="rahulapisero" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="6b54b157-b4b4-489c-a467-5919d7f6718f" file="api\config.yaml" />
+	<flow name="izanalyzer-demoFlow" doc:id="9ace7110-8c07-40ba-8b0b-2637474bfc16" >
+		<http:listener doc:name="Listener" doc:id="3e85a2d1-5d9b-4327-b7b9-d0350e39602a" config-ref="HTTP_Listener_config" path="/token1"/>
+		<db:select doc:name="Select" doc:id="260d3e32-5a66-4ea3-a772-b2cd5d99511b" config-ref="Database_Config">
+			<db:sql >${DB.QUERY}</db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="Logger" doc:id="473c0cc3-5cb8-4a39-b067-5c48495a069e" message="#[payload]"/>
+	</flow>
+</mule>

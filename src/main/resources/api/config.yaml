@@ -1,0 +1,2 @@
+DB:
+ QUERY: "select * from customer"
